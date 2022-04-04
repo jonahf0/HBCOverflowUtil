@@ -41,12 +41,12 @@ def main(id, modified):
     #get info for the target and next entry
     target, target_info = get_string_info(id)
     
-    print("Target string's info: \n\t{}".format(target_info))
+    print(f"Target string's info: \n\t{target_info}\n")
 
     byte_modified = [ ord(letter) for letter in modified ]
 
     if len(byte_modified) <= len(target):
-        print("Padding the string...")
+        print("Padding the string...\n")
 
         byte_modified = [ 32 for byte in range(0, len(target)-len(byte_modified) )] + byte_modified
 
@@ -63,13 +63,13 @@ def main(id, modified):
 
     copy_metadata["stringStorage"] = new_storage
 
-    print("Modifying the length entry...")
+    print("Modifying the length entry...\n")
     #make sure to modify the length of the table entry
     copy_metadata["stringTableEntries"][id]["length"] = len(byte_modified)
 
-    print("New 'stringTableEntries' entry:\n\t{}".format(copy_metadata["stringTableEntries"][id]))
+    print(f"New 'stringTableEntries' entry:\n\t{copy_metadata['stringTableEntries'][id]}\n")
 
-    print("Dumping the data to 'new_metadata.json'...")
+    print("Dumping the data to 'new_metadata.json'...\n")
     #dump the file, making sure not to overwrite the original
     with open("new_metadata.json", "w") as new:
         dump(copy_metadata, new)
