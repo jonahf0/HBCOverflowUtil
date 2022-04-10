@@ -4,9 +4,13 @@ from argparse import ArgumentParser
 #temporarily the default loccation for this is pwd;
 #should change but meh
 METADATA = "metadata.json"
+STRING="string.json"
 
 with open(METADATA) as f:
     metadata = load(f)
+
+with open(STRING) as f:
+    string = load(f)
 
 #not a whole lot in this script, just a main
 def main(target_id, new_entry):
@@ -38,8 +42,19 @@ def main(target_id, new_entry):
 
     print(f"Modifying the table entry:\n\t{info[target_id]}\n")
 
+    string.append(
+        {
+            "id":len(string)+1,
+            "isUTF16":False,
+            "value":new_entry
+        }
+    )
+
     with open("new_metadata.json", "w") as f:
         dump(metadata, f)
+
+    with open("new_string.json", "w") as f:
+        dump(string, f)
 
     print("Success!")
 
