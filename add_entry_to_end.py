@@ -32,6 +32,8 @@ def main(target_id, new_entry):
     #of the storage
     storage += [ ord(letter) for letter in new_entry ] 
 
+
+    print(f"Modifying the table entry:\n\t{info[target_id]}\n")
     #modify the table entry so it now points to the end
     #of the string storage instead of it's original
     info[target_id] = {
@@ -40,8 +42,7 @@ def main(target_id, new_entry):
         'length': len(new_entry)
         }
 
-    print(f"Modifying the table entry:\n\t{info[target_id]}\n")
-
+    print(f"Modifying string.json at {target_id}\n")
     string.append(
         {
             "id":len(string)+1,
@@ -49,6 +50,8 @@ def main(target_id, new_entry):
             "value":new_entry
         }
     )
+
+    string[1588]["value"] = new_entry
 
     with open("new_metadata.json", "w") as f:
         dump(metadata, f)
