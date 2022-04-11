@@ -74,6 +74,11 @@ def main(id, modified):
     with open("new_metadata.json", "w") as new:
         dump(copy_metadata, new)
 
+    strings[id]["value"] = modified
+
+    with open("new_string.json", "w") as new:
+        dump(strings, new)
+
     print("Success!")
 
 if __name__ == "__main__":
