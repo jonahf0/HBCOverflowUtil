@@ -20,10 +20,9 @@ def main(target_id, new_entry):
     info = metadata["stringTableEntries"]
     header = metadata["header"]
 
-    print("Modifying the header...\n")
-    #increment since you're adding a new string
-    header["stringCount"] += 1
+    original_storage_len = len(storage)
 
+    print("Modifying the header...\n")
     #increment by length of new entry
     header["stringStorageSize"] += len(new_entry)
 
@@ -32,32 +31,19 @@ def main(target_id, new_entry):
     #of the storage
     storage += [ ord(letter) for letter in new_entry ] 
 
-
     print(f"Modifying the table entry:\n\t{info[target_id]}\n")
     #modify the table entry so it now points to the end
     #of the string storage instead of it's original
     info[target_id] = {
         'isUTF16': 0,
-        'offset': len(storage),
+        'offset': original_storage_len-1,
         'length': len(new_entry)
         }
 
-    info[len(info)-1] = {
-    'isUTF16': 0,
-    'offset': len(storage),
-    'length': len(new_entry)
-    }
-
     print(f"Modifying string.json at {target_id}\n")
-    string.append(
-        {
-            "id":len(string)+1,
-            "isUTF16":False,
-            "value":new_entry
-        }
-    )
 
-    string[1588]["value"] = new_entry
+    #modify the string that's in string.json so it all lines up
+    string[target_id]["value"] = new_entry
 
     with open("new_metadata.json", "w") as f:
         dump(metadata, f)
