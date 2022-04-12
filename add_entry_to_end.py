@@ -42,6 +42,12 @@ def main(target_id, new_entry):
         'length': len(new_entry)
         }
 
+    info[len(info)-1] = {
+    'isUTF16': 0,
+    'offset': len(storage),
+    'length': len(new_entry)
+    }
+
     print(f"Modifying string.json at {target_id}\n")
     string.append(
         {
